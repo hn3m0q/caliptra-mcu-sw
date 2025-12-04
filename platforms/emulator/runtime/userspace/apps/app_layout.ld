@@ -167,6 +167,20 @@ SECTIONS {
 
     _heap_start = ADDR(.bss) + SIZEOF(.bss);  /* Used by rt_header */
 
+    /* defmt metadata section - not loaded into memory, just stored in ELF */
+    .defmt 0 (INFO) :
+    {
+      *(.defmt.error.*);
+      _defmt_warn = .;
+      *(.defmt.warn.*);
+      _defmt_info = .;
+      *(.defmt.info.*);
+      _defmt_debug = .;
+      *(.defmt.debug.*);
+      _defmt_trace = .;
+      *(.defmt.trace.*);
+    }
+
     /* Sections we do not need. */
     /DISCARD/ :
     {

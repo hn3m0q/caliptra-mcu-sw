@@ -10,6 +10,11 @@ use std::process::Command;
 pub const EMULATOR_APPS: &[App] = &[
     App {
         // Make sure this is the first app in the list
+        name: "hello-world-app",
+        permissions: vec![],
+        minimum_ram: 48 * 1024,
+    },
+    App {
         name: "example-app",
         permissions: vec![],
         minimum_ram: 48 * 1024,
@@ -32,6 +37,11 @@ pub const FPGA_APPS: &[App] = &[
         name: "user-app",
         permissions: vec![],
         minimum_ram: 106 * 1024,
+    },
+    App {
+        name: "hello-world-app",
+        permissions: vec![],
+        minimum_ram: 48 * 1024,
     },
 ];
 
@@ -224,15 +234,21 @@ INCLUDE platforms/emulator/runtime/userspace/apps/app_layout.ld",
         features.join(",")
     };
 
-    let status = Command::new("cargo")
-        .current_dir(&*PROJECT_ROOT)
+    let mut cmd = Command::new("cargo");
+    cmd.current_dir(&*PROJECT_ROOT)
         .args([
             "rustc",
             "-p",
             app_name,
             "--release",
-            "--features",
-            &features_str,
+        ]);
+
+    if !features.is_empty() {
+        cmd.args(["--features", &features_str]);
+    }
+
+    let status = cmd
+        .args([
             "--target",
             TARGET,
             "--",

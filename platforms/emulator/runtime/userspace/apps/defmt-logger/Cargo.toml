@@ -1,0 +1,24 @@
+# Licensed under the Apache-2.0 license
+
+[package]
+name = "defmt-logger"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+
+[dependencies]
+critical-section.workspace = true
+defmt = "1.0.1"
+libtock_console.workspace = true
+libtock_runtime.workspace = true
+
+[target.'cfg(not(target_arch = "riscv32"))'.dependencies]
+libtock_unittest.workspace = true
+
+[target.'cfg(target_arch = "riscv32")'.dependencies]
+embassy-executor = { version = "0.6.3", features = ["arch-riscv32", "nightly"] }
+
+[features]
+default = []
+logger_a = []
+logger_b = []

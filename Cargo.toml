@@ -37,6 +37,8 @@ members = [
     "platforms/emulator/runtime/userspace/api/caliptra-api",
     "platforms/emulator/runtime/userspace/apps/example",
     "platforms/emulator/runtime/userspace/apps/user",
+    "platforms/emulator/runtime/userspace/apps/hello_world",
+    "platforms/emulator/runtime/userspace/apps/defmt-logger",
     "platforms/fpga/config",
     "platforms/fpga/rom",
     "platforms/fpga/runtime",
@@ -73,6 +75,7 @@ members = [
     "tests/hello",
     "tests/integration",
     "xtask",
+    "tools/emulator-run",
 ]
 resolver = "2"
 
